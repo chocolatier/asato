@@ -25,3 +25,6 @@ parseAuth = do
 fromResult :: JSON.Result TMDBAuth -> TMDBAuth 
 fromResult (JSON.Success x) = x
 fromResult x = error (show x)
+
+searchMovie :: T.Text -> T.Text -> IO (Either Error Movie)
+searchMovie key str =  (head <$>) <$> runTheMovieDB key (searchMovies str) --LMAO 

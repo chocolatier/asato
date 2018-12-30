@@ -10,5 +10,5 @@ main :: IO ()
 main = do 
     auth <- parseAuth
     let v3key = v3Auth auth
-    result <- runTheMovieDB v3Key (searchMovies "Robots")
+    result <- searchMovie v3key "Robots"
     putStrLn $ show result
