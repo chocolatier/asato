@@ -27,4 +27,9 @@ fromResult (JSON.Success x) = x
 fromResult x = error (show x)
 
 searchMovie :: T.Text -> T.Text -> IO (Either Error Movie)
-searchMovie key str =  (head <$>) <$> runTheMovieDB key (searchMovies str) --LMAO 
+searchMovie key str = do
+  result <- runTheMovieDB key (searchMovies str) 
+  case result of
+    Left er -> return $ Left er
+    Right ms -> return $ Right $ head ms
+  
