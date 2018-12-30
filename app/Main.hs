@@ -1,7 +1,10 @@
+{-# LANGUAGE DeriveGeneric, OverloadedStrings #-}
+
 module Main where
     
-import Data.Yaml.Config
 import Lib
 
 main :: IO ()
-main = testFunc
+main = do 
+    settings <- parseAuth
+    putStrLn $ show settings
