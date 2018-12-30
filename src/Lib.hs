@@ -40,4 +40,9 @@ searchMovie key str = do
           else 
             Left $ NoResultError 
         
-  
+-- formatMovie :: Movie -> Embed 
+-- formatMovie m = 
+--   let
+--     url = "https://www.themoviedb.org/movie/" ++ show $ movieID m
+--     title = movieTitle m
+--     imageURL = "http://image.tmdb.org/t/p/w92/" ++ moviePosterPath m 

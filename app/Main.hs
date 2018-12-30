@@ -12,6 +12,8 @@ import Data.Monoid ((<>))
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 
+import Data.Time.Clock
+
 import Discord
 
 main :: IO ()
@@ -37,7 +39,11 @@ listeningLoop dis key = do
             when (isCmd (messageText m)) $ do
                 let searchStr = T.drop 4 (messageText m)
                 result <- searchMovie key searchStr
-                resp <- restCall dis (CreateMessage (messageChannel m) (T.pack $ show result))
+                let messageContent = T.pack $ case result of 
+                                        Left _ -> "Error. @yeehaw"
+                                        Right x -> getMovieURL x
+
+                resp <- restCall dis (CreateMessage (messageChannel m) messageContent)
                 putStrLn (show resp)
                 putStrLn ""
         _ -> pure ()
@@ -45,6 +51,20 @@ listeningLoop dis key = do
 
 isCmd :: T.Text -> Bool
 isCmd = T.isPrefixOf "b!f "
-    
 
-                
+getMovieURL m = "https://www.themoviedb.org/movie/" ++ (show $ movieID m)
+
+test = do
+    currT <- getCurrentTime
+    let x = Embed {
+        embedTitle = "Test",
+        embedType = "rich",
+        embedDesc = "Test Embed",
+        embedUrl = "https://duckduckgo.com",
+        embedColor = 123456,
+        embedFields = [],
+        embedTime = currT
+        }
+    return x
+
+
