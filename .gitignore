@@ -23,5 +23,5 @@ cabal.project.local~
 .stack-work/
 asato.cabal
 *~
-
+*.secret
 app/conf.yaml
