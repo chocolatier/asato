@@ -36,7 +36,7 @@ listeningLoop dis key = do
         Right (MessageCreate m) -> do
             when (isCmd (messageText m)) $ do
                 let searchStr = T.drop 4 (messageText m)
-                result <- searchMovie key (messageText m)
+                result <- searchMovie key searchStr
                 resp <- restCall dis (CreateMessage (messageChannel m) (T.pack $ show result))
                 putStrLn (show resp)
                 putStrLn ""
