@@ -46,11 +46,20 @@ listeningLoop dis key = do
                 resp <- restCall dis (CreateMessage (messageChannel m) messageContent)
                 putStrLn (show resp)
                 putStrLn ""
+            when (isbangF (messageText m)) $ do
+                let msg = "!film" ++ (T.drop 2 (messageText m))
+                resp <- restCall dis (CreateMessage (messageChannel m) msg)
+                putStrLn (show resp)
+                putStrLn ""
+
         _ -> pure ()
     listeningLoop dis key
 
 isCmd :: T.Text -> Bool
 isCmd = T.isPrefixOf "b!f "
+
+isbangF :: T.Text -> Bool
+isbangF = T.isPrefixOf "!f "
 
 getMovieURL m = "https://www.themoviedb.org/movie/" ++ (show $ movieID m)
 
